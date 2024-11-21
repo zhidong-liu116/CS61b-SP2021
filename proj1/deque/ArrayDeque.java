@@ -82,7 +82,7 @@ public class ArrayDeque<T> implements Iterable<T>{
 
     public T removeFirst(){
         if(isEmpty()){
-            throw new NoSuchElementException("Queue is empty");
+            return null;
         } else {
             // two approaches are the same mathematical logic
             // "(size - 1) / items.length < 0.25" is equivalent to "size < items.length / 4"
@@ -105,7 +105,7 @@ public class ArrayDeque<T> implements Iterable<T>{
      * returns deleted item. */
     public T removeLast() {
         if(isEmpty()){
-            throw new NoSuchElementException("Queue is empty");
+            return null;
         } else {
             if(size < items.length / 4 && items.length > 8){
                 resize(items.length / 2);
@@ -125,11 +125,15 @@ public class ArrayDeque<T> implements Iterable<T>{
 
     /** Gets the ith item in the list (0 is the front). */
     public T get(int i) {
-        if(isEmpty() || i < 0){
+//        if (i < 0 || i >= size) {
+//            return null;
+//        }else {
+//            return items[(front + i + items.length) % items.length];
+//        }
+        if (isEmpty() || i < 0 || i >= size) {  // 保留isEmpty()检查
             return null;
-        } else {
-            return items[(front + i + items.length) % items.length];
         }
+        return items[(front + i + items.length) % items.length];
     }
 
     /**
@@ -234,16 +238,17 @@ public class ArrayDeque<T> implements Iterable<T>{
     }
 
     public static void main(String[] args) {
-//        ArrayDeque<Object> A1 = new ArrayDeque<>();
-//        A1.addFirst(1);
-//        A1.addFirst(2);
-//        A1.addFirst(3);
-//        A1.addFirst(4);
-//        A1.addFirst(5);
-//        A1.addFirst(6);
-//        A1.addFirst(7);
-//        A1.addFirst(8);
-//        A1.addFirst(9);
+        ArrayDeque<Object> A1 = new ArrayDeque<>();
+        A1.addFirst(1);
+        A1.addFirst(2);
+        A1.addFirst(3);
+        A1.addFirst(4);
+        A1.addFirst(5);
+        A1.addFirst(6);
+        A1.addFirst(7);
+        A1.addFirst(8);
+        A1.addFirst(9);
+        System.out.println(A1.get(0));
 
 //        ArrayDeque<Object> A2 = new ArrayDeque<>();
 //        A2.addFirst(1);
@@ -261,5 +266,4 @@ public class ArrayDeque<T> implements Iterable<T>{
 
 //        System.out.println(A1.equals(A2));
     }
-
 }

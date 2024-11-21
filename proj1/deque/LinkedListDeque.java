@@ -224,19 +224,19 @@ public class LinkedListDeque<T> implements Iterable<T> {
 
 
     public static void main(String[] args) {
-        LinkedListDeque<Object> L = new LinkedListDeque<>(); // object allows any type of obj eg, int, string..
-        L.addLast("10");
-        L.addLast(20);
-        L.addLast(30);
-
-
-        System.out.println("Testing with for-each loop:");
-        for (Object item : L) {
-            System.out.println(item);
-        }
-
-        System.out.println(STR."\{L.getRecursive(2)} Find the item with getRecursive method");
-
-        //L.printDeque();
+//        LinkedListDeque<Object> L = new LinkedListDeque<>(); // object allows any type of obj eg, int, string..
+//        L.addLast("10");
+//        L.addLast(20);
+//        L.addLast(30);
+//
+//
+//        System.out.println("Testing with for-each loop:");
+//        for (Object item : L) {
+//            System.out.println(item);
+//        }
+//
+//        System.out.println(STR."\{L.getRecursive(2)} Find the item with getRecursive method");
+//
+//        //L.printDeque();
     }
 }
