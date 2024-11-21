@@ -13,7 +13,7 @@ public class ArrayDeque<T> implements Iterable<T>{
     public ArrayDeque() {
         items = (T[]) new Object[8];
         front = 0;
-        back = 1;
+        back = 0;
         size = 0;
     }
 
@@ -22,7 +22,7 @@ public class ArrayDeque<T> implements Iterable<T>{
         if(isEmpty()){
             items[back] = x;
         } else{
-            if(front == back){
+            if(size == items.length){
                 resize(size * 2);
             }
             back = (back + 1 + items.length) % items.length;
@@ -65,7 +65,7 @@ public class ArrayDeque<T> implements Iterable<T>{
         if(isEmpty()) {
             items[front] = x;
         } else{
-            if(front == back){
+            if(size == items.length){
                 resize(size * 2);
             }
             front = ((front - 1) + items.length) % items.length;
@@ -239,15 +239,16 @@ public class ArrayDeque<T> implements Iterable<T>{
 
     public static void main(String[] args) {
         ArrayDeque<Object> A1 = new ArrayDeque<>();
-        A1.addFirst(1);
-        A1.addFirst(2);
-        A1.addFirst(3);
-        A1.addFirst(4);
-        A1.addFirst(5);
-        A1.addFirst(6);
-        A1.addFirst(7);
-        A1.addFirst(8);
-        A1.addFirst(9);
+        //A1.addFirst(1);
+        A1.addLast(1);
+        A1.addLast(2);
+        A1.addLast(3);
+        A1.addLast(4);
+        A1.addLast(5);
+        A1.addLast(6);
+        A1.addLast(7);
+        A1.addLast(8);
+        A1.addLast(9);
         System.out.println(A1.get(0));
 
 //        ArrayDeque<Object> A2 = new ArrayDeque<>();
