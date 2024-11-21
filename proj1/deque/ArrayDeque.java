@@ -234,16 +234,16 @@ public class ArrayDeque<T> implements Iterable<T>{
     }
 
     public static void main(String[] args) {
-        ArrayDeque<Object> A1 = new ArrayDeque<>();
-        A1.addFirst(1);
-        A1.addFirst(2);
-        A1.addFirst(3);
-        A1.addFirst(4);
-        A1.addFirst(5);
-        A1.addFirst(6);
-        A1.addFirst(7);
-        A1.addFirst(8);
-        A1.addFirst(9);
+//        ArrayDeque<Object> A1 = new ArrayDeque<>();
+//        A1.addFirst(1);
+//        A1.addFirst(2);
+//        A1.addFirst(3);
+//        A1.addFirst(4);
+//        A1.addFirst(5);
+//        A1.addFirst(6);
+//        A1.addFirst(7);
+//        A1.addFirst(8);
+//        A1.addFirst(9);
 
 //        ArrayDeque<Object> A2 = new ArrayDeque<>();
 //        A2.addFirst(1);
@@ -260,7 +260,6 @@ public class ArrayDeque<T> implements Iterable<T>{
 //        System.out.println(A1.size());
 
 //        System.out.println(A1.equals(A2));
-
     }
 
 }
