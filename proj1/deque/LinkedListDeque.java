@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /** deque implementation ==> ### Linked List based ### */
 
-public class LinkedListDeque<T> implements Iterable<T> {
+public class LinkedListDeque<T> implements Deque<T> {
     private class Node {
         public T item;
         public Node next;
@@ -42,7 +42,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         size = 1;
     }
 
-
+    @Override
     public void addFirst(T item) {
         Node p = new Node(item, sentinel.next, sentinel); // this make sure, new node is appearing between sentinel node and the oldlast Node(if there is one)
         sentinel.prev.next = p; // changing the pointer of sentinel node to new node
@@ -50,6 +50,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         size += 1;
     }
 
+    @Override
     public void addLast(T item) {
         Node p = new Node(item, sentinel, sentinel.prev);
         sentinel.prev.next = p;
@@ -57,24 +58,16 @@ public class LinkedListDeque<T> implements Iterable<T> {
         size += 1;
     }
 
-    public boolean isEmpty() {
-        // method1：check next is pointing to sentinel or not;
-        // return sentinel.next == sentinel;
-
-        // method2: check the size
-        // return size == 0;
-
-        // method 3: check if "next" and prev pointing to the same node (sentinel node)
-        return sentinel.next == sentinel.prev;
-    }
 
     /** Return the size of the linked-list deque */
+    @Override
     public int size() {
         return size;
     }
 
 
     /** Print method that used to print the elements of this Linked-List deque */
+    @Override
     public void printDeque() {
         System.out.println("Below is the elements in this linked-list-deque");
         if(isEmpty()) {
@@ -92,6 +85,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         System.out.println();
     }
 
+    @Override
     public T removeFirst() {
         if(isEmpty()) {
             return null;
@@ -103,6 +97,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         return removedItem;
     }
 
+    @Override
     public T removeLast() {
         if(isEmpty()) {
             return null;
@@ -114,6 +109,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         return removedItem;
     }
 
+    @Override
     public T get(int index) {
         int counter = 0;
         Node p = sentinel.next;
@@ -182,6 +178,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         }
     }
 
+    @Override
     public boolean equals(Object o) {
         // step 1: make sure object o is the type LinkedListDeque
         // if o is null or not LinkedListDeque type, return false;

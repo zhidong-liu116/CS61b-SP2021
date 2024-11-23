@@ -3,7 +3,7 @@ package deque;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayDeque<T> implements Iterable<T>{
+public class ArrayDeque<T> implements Deque<T>{
     private T[] items;
     private int size;
     private int front;      // front pointer
@@ -18,6 +18,7 @@ public class ArrayDeque<T> implements Iterable<T>{
     }
 
     /** Inserts X into the back of the list. */
+    @Override
     public void addLast(T x) {
         if(isEmpty()){
             items[back] = x;
@@ -61,6 +62,7 @@ public class ArrayDeque<T> implements Iterable<T>{
 //        }
 //    }
 
+    @Override
     public void addFirst(T x){
         if(isEmpty()) {
             items[front] = x;
@@ -75,11 +77,12 @@ public class ArrayDeque<T> implements Iterable<T>{
     }
 
 
+
     /** Deletes item from front of the list and
      * returns deleted item.  You can somehow resize array to have
      * less space consumption. But remember, resizing array to decrease its size
      * will also cause O(n) time complexity!! */
-
+    @Override
     public T removeFirst(){
         if(isEmpty()){
             return null;
@@ -103,6 +106,7 @@ public class ArrayDeque<T> implements Iterable<T>{
 
     /** Deletes item from back of the list and
      * returns deleted item. */
+    @Override
     public T removeLast() {
         if(isEmpty()){
             return null;
@@ -124,6 +128,7 @@ public class ArrayDeque<T> implements Iterable<T>{
     }
 
     /** Gets the ith item in the list (0 is the front). */
+    @Override
     public T get(int i) {
 //        if (i < 0 || i >= size) {
 //            return null;
@@ -139,14 +144,11 @@ public class ArrayDeque<T> implements Iterable<T>{
     /**
      * Returns the number of items in the list.
      */
+    @Override
     public int size() {
         return size;
     }
 
-    /** check if arraydeque is empty */
-    public boolean isEmpty() {
-        return size == 0;
-    }
 
     /** Return an iterator of a LinkedListDeque */
     public Iterator<T> iterator() {
@@ -183,6 +185,7 @@ public class ArrayDeque<T> implements Iterable<T>{
         }
     }
 
+    @Override
     public boolean equals(Object o) {
         // step 1: make sure object o is the type ArrayDeque
         // if o is null or not LinkedListDeque type, return false;
@@ -217,6 +220,7 @@ public class ArrayDeque<T> implements Iterable<T>{
         return true;
     }
 
+    @Override
     public void printDeque() {
         for (int i = 0; i < size; i++) {
                 System.out.print(items[(front + i) % items.length] + " ");
@@ -240,16 +244,16 @@ public class ArrayDeque<T> implements Iterable<T>{
     public static void main(String[] args) {
         ArrayDeque<Object> A1 = new ArrayDeque<>();
         //A1.addFirst(1);
-        A1.addLast(1);
-        A1.addLast(2);
-        A1.addLast(3);
-        A1.addLast(4);
-        A1.addLast(5);
-        A1.addLast(6);
-        A1.addLast(7);
-        A1.addLast(8);
-        A1.addLast(9);
-        System.out.println(A1.get(0));
+//        A1.addLast(1);
+//        A1.addLast(2);
+//        A1.addLast(3);
+//        A1.addLast(4);
+//        A1.addLast(5);
+//        A1.addLast(6);
+//        A1.addLast(7);
+//        A1.addLast(8);
+//        A1.addLast(9);
+//        System.out.println(A1.get(0));
 
 //        ArrayDeque<Object> A2 = new ArrayDeque<>();
 //        A2.addFirst(1);
