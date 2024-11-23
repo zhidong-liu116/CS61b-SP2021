@@ -9,7 +9,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         private Node next;
         private Node prev;
 
-        public Node(T i, Node n, Node p) {
+        private Node(T i, Node n, Node p) {
             item = i;
             next = n;
             prev = p;
@@ -118,7 +118,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
 
     /** This helper method help you traverse the deque which the public method didn't have
-     * Reminder!!!: Private method should only focus on how recursion works here, boundary check should
+     * Reminder: Private method should only focus on how recursion works here, boundary check should
      * be done by public method! */
 
     private T getRecursive(int index, Node p) {
@@ -129,7 +129,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     /** The get method that returns the element in deque
-     * Use the helper method above solve the issue, traverse the deque, since there is only one parameter in this method
+     * Use helper method above solve the issue, traverse the deque
      * */
     public T getRecursive(int index) {
         if (index < 0 || index > size) {
@@ -147,7 +147,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         Node current = sentinel;
 
         /** Constructor for LinkedListDequeIterator */
-        public LinkedListDequeIterator() {
+        private LinkedListDequeIterator() {
             // iterator begins from the first valid node, which is the node after sentinel node.
             current = sentinel.next;
         }
@@ -177,7 +177,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
 
         // Step2, check the size
-        if (this.size() != ((LinkedListDeque<?>) o).size()) {
+        if (this.size() != ((Deque<T>) o).size()) {
             return false;
         }
 
@@ -186,10 +186,20 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         // make iterator for each object
         // one for "this" obj, and the other one for object o
         Iterator<T> thisIterator = this.iterator();
-        Iterator<T> objectIterator = ((LinkedListDeque<T>) o).iterator();
+        Iterator<?> objectIterator;
+
+        // return exact iterator based on its type
+        if (o instanceof A1) {
+            objectIterator = ((A1<?>) o).iterator();
+        } else if (o instanceof LinkedListDeque) {
+            objectIterator = ((LinkedListDeque<?>) o).iterator();
+        } else {
+            return false;
+        }
+
         while (thisIterator.hasNext()) {
             T thisItem = thisIterator.next();
-            T objectItem = objectIterator.next();
+            Object objectItem = objectIterator.next();
             // this approach is as same as the one below, this clarifies better logic.
             // this also make sure that "null.equals" happen
             // bc null value cannot call equals, it will throw NullPointer Exceptions.s
@@ -200,8 +210,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             } else if (!thisItem.equals(objectItem)) {
                 return false;
             }
-
-            /** below is a simplified and better version to compare two objects(recommend in futures) */
+            /** simplified version to compare two objects(recommend in futures) */
             //            if (!Objects.equals(this_iterator.next(), object_iterator.next())) {
             //                return false;
             //            }
@@ -209,32 +218,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return true;
     }
 
-
     private static void main(String[] args) {
-        //        LinkedListDeque<Object> L = new LinkedListDeque<>(); object allows any type of obj eg, int, string..
-        //        L.addLast("10");
-        //        L.addLast(20);
-        //        L.addLast(30);
-        //
-        //
-        //        System.out.println("Testing with for-each loop:");
-        //        for (Object item : L) {
-        //            System.out.println(item);
-        //        }
-        //
-        //        System.out.println(STR."\{L.getRecursive(2)} Find the item with getRecursive method");
-        //
-        //        //L.printDeque();
-    //        LinkedListDeque<Object> L = new LinkedListDeque<>();
-    //        L.addFirst(1);
-    //        L.addFirst(2);
-    //        L.addFirst(3);
-    //
-    //        L.addLast(1);
-    //        L.addLast(2);
-    //        L.addLast(3);
-    //        System.out.println(L.removeLast());
-    //        System.out.println(L.removeLast());
-    //        System.out.println(L.removeLast());
+
     }
 }

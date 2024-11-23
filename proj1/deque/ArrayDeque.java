@@ -6,7 +6,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private int size;
     private int front;      // front pointer
     private int back;       // back pointer
-    final int resizingLength = 16;
+    private final int resizingLength = 16;
     /** Creates an empty list. */
     public ArrayDeque() {
         items = (T[]) new Object[8];
@@ -94,6 +94,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             if (size < items.length / 4 && items.length >= resizingLength) {
                 resize(items.length / 2);
             }
+
+            if (size == 1) {
+                T removedItem = items[front];
+                items[front] = null;
+                size--;
+                return removedItem;
+            }
+
             T removedItem = items[front];
             items[front] = null;
             front = (front + 1 + items.length) % items.length;
@@ -166,7 +174,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         private int count; // counter for the iterator
 
         /** Constructor */
-        public ArrayDequeIterator() {
+        private ArrayDequeIterator() {
             pos = front;
             count = 0;
         }
@@ -200,7 +208,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
 
         // Step2, check the size
-        if (this.size() != ((ArrayDeque<?>) o).size()) {
+        if (this.size() != ((Deque<T>) o).size()) {
             return false;
         }
 
@@ -208,18 +216,26 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         // reminder: we can use iterator we just created
         // make iterator for each object
         // one for "this" obj, and the other one for object o
-        Iterator<T> thisObj = this.iterator();
-        Iterator<T> objArrayDeque = ((ArrayDeque<T>) o).iterator();
+        Iterator<T> thisIterator = this.iterator();
+        Iterator<?> objectIterator;
 
-        while (thisObj.hasNext()) {
-            T thisobjItems = thisObj.next();
-            Object objArrayDequeItem = objArrayDeque.next();
-            // remember, do not compare each iterator, compare each element, e.g, this_obj.next();
-            if (thisobjItems == null) {
-                if (objArrayDequeItem != null) {
+        if (o instanceof ArrayDeque) {
+            objectIterator = ((ArrayDeque<?>) o).iterator();
+        } else if (o instanceof LinkedListDeque) {
+            objectIterator = ((LinkedListDeque<?>) o).iterator();
+        } else {
+            return false;
+        }
+
+        while (thisIterator.hasNext()) {
+            T thisItem = thisIterator.next();
+            Object objectItem = objectIterator.next();
+
+            if (thisItem == null) {
+                if (objectItem != null) {
                     return false;
                 }
-            } else if (!thisobjItems.equals(objArrayDequeItem)) {
+            } else if (!thisItem.equals(objectItem)) {
                 return false;
             }
         }
@@ -244,34 +260,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         // update array and f/b pointer
         items = newItems;
         front = 0;                // front -> start of the new array
-        back = size - 1;          // back point to the last position that has valued element - (指向最后一个有效数据的位置)
+        back = size - 1;          // back point to the last position that has valued element
     }
 
     private static void main(String[] args) {
-        ArrayDeque<Object> A1 = new ArrayDeque<>();
-        //A1.addFirst(1);
-        //        A1.addFirst(1);
-        //        A1.removeLast();
-        //        A1.addFirst(3);
-        //        A1.addFirst(4);
-        //        A1.addFirst(5);
-        //        A1.addFirst(6);
-        //        System.out.println(A1.removeLast());
 
-        //        ArrayDeque<Object> A2 = new ArrayDeque<>();
-        //        A2.addFirst(1);
-        //        A2.addFirst(2);
-        //        A2.addFirst(3);
-        //        A2.addFirst(3);
-
-
-
-        //        A1.printDeque();
-        //        System.out.println(A1.get(6));
-        //        A1.printDeque();
-        //        System.out.println("Below is size arrayDeque");
-        //        System.out.println(A1.size());
-
-        //        System.out.println(A1.equals(A2));
     }
 }

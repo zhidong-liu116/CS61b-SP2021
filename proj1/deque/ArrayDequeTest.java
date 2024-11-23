@@ -8,7 +8,7 @@ public class ArrayDequeTest {
     @Test
     public void addFirstAndLastTest() {
         // 创建一个 ArrayDeque 对象
-        ArrayDeque<Integer> A2 = new ArrayDeque<>();
+        A1<Integer> A2 = new A1<>();
 
         // 添加元素到前端，并检查大小
         A2.addFirst(1);
@@ -34,7 +34,7 @@ public class ArrayDequeTest {
 
         //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        ArrayDeque<String> A1 = new ArrayDeque<String>();
+        A1<String> A1 = new A1<String>();
 
         assertTrue("A newly initialized LLDeque should be empty", A1.isEmpty());
         A1.addLast("front");
