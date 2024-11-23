@@ -1,5 +1,6 @@
 package deque;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
@@ -201,45 +202,26 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public boolean equals(Object o) {
-        // step 1: make sure object o is the type ArrayDeque
-        // if o is null or not LinkedListDeque type, return false;
-        if (!(o instanceof Deque)) {
-            return false;
-        }
+        if (o instanceof Deque) {
+            Deque<T> other = (Deque<T>) o;
 
-        // Step2, check the size
-        if (this.size() != ((Deque<T>) o).size()) {
-            return false;
-        }
-
-        // Step3 compare elements for each deque
-        // reminder: we can use iterator we just created
-        // make iterator for each object
-        // one for "this" obj, and the other one for object o
-        Iterator<T> thisIterator = this.iterator();
-        Iterator<?> objectIterator;
-
-        if (o instanceof ArrayDeque) {
-            objectIterator = ((ArrayDeque<?>) o).iterator();
-        } else if (o instanceof LinkedListDeque) {
-            objectIterator = ((LinkedListDeque<?>) o).iterator();
-        } else {
-            return false;
-        }
-
-        while (thisIterator.hasNext()) {
-            T thisItem = thisIterator.next();
-            Object objectItem = objectIterator.next();
-
-            if (thisItem == null) {
-                if (objectItem != null) {
-                    return false;
-                }
-            } else if (!thisItem.equals(objectItem)) {
+            // Check size first
+            if (this.size() != other.size()) {
                 return false;
             }
+
+            // Compare elements using get()
+            for (int i = 0; i < this.size(); i++) {
+                T thisItem = this.get(i);
+                T otherItem = other.get(i);
+
+                if (!Objects.equals(thisItem, otherItem)) { // Handles null cases
+                    return false;
+                }
+            }
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override

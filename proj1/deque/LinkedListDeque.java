@@ -1,5 +1,6 @@
 package deque;
 import java.util.Iterator;
+import java.util.Objects;
 
 /** deque implementation ==> ### Linked List based ### */
 
@@ -177,7 +178,8 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
 
         // Step2, check the size
-        if (this.size() != ((Deque<T>) o).size()) {
+        Deque<?> other = (Deque<?>) o; // Avoid unsafe casting
+        if (this.size() != other.size()) {
             return false;
         }
 
@@ -185,7 +187,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         // reminder: we can use iterator we just created
         // make iterator for each object
         // one for "this" obj, and the other one for object o
-        Iterator<T> thisIterator = this.iterator();
+        Iterator<?> thisIterator = this.iterator();
         Iterator<?> objectIterator;
 
         // return exact iterator based on its type
@@ -198,22 +200,22 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
 
         while (thisIterator.hasNext()) {
-            T thisItem = thisIterator.next();
+            Object thisItem = thisIterator.next();
             Object objectItem = objectIterator.next();
             // this approach is as same as the one below, this clarifies better logic.
             // this also make sure that "null.equals" happen
             // bc null value cannot call equals, it will throw NullPointer Exceptions.s
-            if (thisItem == null) {
-                if (objectItem != null) {
-                    return false;
-                }
-            } else if (!thisItem.equals(objectItem)) {
-                return false;
-            }
-            /** simplified version to compare two objects(recommend in futures) */
-            //            if (!Objects.equals(this_iterator.next(), object_iterator.next())) {
+            //            if (thisItem == null) {
+            //                if (objectItem != null) {
+            //                    return false;
+            //                }
+            //            } else if (!thisItem.equals(objectItem)) {
             //                return false;
             //            }
+            /** simplified version to compare two objects(recommend in futures) */
+            if (!Objects.equals(thisItem, objectItem)) {
+                return false;
+            }
         }
         return true;
     }
