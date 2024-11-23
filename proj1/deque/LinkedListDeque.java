@@ -171,53 +171,25 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public boolean equals(Object o) {
-        // step 1: make sure object o is the type LinkedListDeque
-        // if o is null or not LinkedListDeque type, return false;
-        if (!(o instanceof Deque)) {
-            return false;
-        }
+        if (o instanceof Deque) {
+            Deque<T> other = (Deque<T>) o;
 
-        // Step2, check the size
-        Deque<?> other = (Deque<?>) o; // Avoid unsafe casting
-        if (this.size() != other.size()) {
-            return false;
-        }
-
-        // Step3 compare elements for each deque
-        // reminder: we can use iterator we just created
-        // make iterator for each object
-        // one for "this" obj, and the other one for object o
-        Iterator<?> thisIterator = this.iterator();
-        Iterator<?> objectIterator;
-
-        // return exact iterator based on its type
-        if (o instanceof ArrayDeque) {
-            objectIterator = ((ArrayDeque<?>) o).iterator();
-        } else if (o instanceof LinkedListDeque) {
-            objectIterator = ((LinkedListDeque<?>) o).iterator();
-        } else {
-            return false;
-        }
-
-        while (thisIterator.hasNext()) {
-            Object thisItem = thisIterator.next();
-            Object objectItem = objectIterator.next();
-            // this approach is as same as the one below, this clarifies better logic.
-            // this also make sure that "null.equals" happen
-            // bc null value cannot call equals, it will throw NullPointer Exceptions.s
-            //            if (thisItem == null) {
-            //                if (objectItem != null) {
-            //                    return false;
-            //                }
-            //            } else if (!thisItem.equals(objectItem)) {
-            //                return false;
-            //            }
-            /** simplified version to compare two objects(recommend in futures) */
-            if (!Objects.equals(thisItem, objectItem)) {
+            // Check size first
+            if (this.size() != other.size()) {
                 return false;
             }
+
+            // Compare elements using get()
+            for (int i = 0; i < this.size(); i++) {
+                T thisItem = this.get(i);
+                T otherItem = other.get(i);
+                if (!Objects.equals(thisItem, otherItem)) { // Handles null cases
+                    return false;
+                }
+            }
+            return true; // if all elements equal
         }
-        return true;
+        return false; // if not an instance of Deque, return false
     }
 
     private static void main(String[] args) {
