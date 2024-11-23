@@ -189,8 +189,8 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         Iterator<?> objectIterator;
 
         // return exact iterator based on its type
-        if (o instanceof A1) {
-            objectIterator = ((A1<?>) o).iterator();
+        if (o instanceof ArrayDeque) {
+            objectIterator = ((ArrayDeque<?>) o).iterator();
         } else if (o instanceof LinkedListDeque) {
             objectIterator = ((LinkedListDeque<?>) o).iterator();
         } else {

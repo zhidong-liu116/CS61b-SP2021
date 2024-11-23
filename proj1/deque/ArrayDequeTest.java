@@ -8,7 +8,7 @@ public class ArrayDequeTest {
     @Test
     public void addFirstAndLastTest() {
         // 创建一个 ArrayDeque 对象
-        A1<Integer> A2 = new A1<>();
+        ArrayDeque<Integer> A2 = new ArrayDeque<>();
 
         // 添加元素到前端，并检查大小
         A2.addFirst(1);
@@ -34,24 +34,24 @@ public class ArrayDequeTest {
 
         //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-        A1<String> A1 = new A1<String>();
+        ArrayDeque<String> ArrayDeque = new ArrayDeque<String>();
 
-        assertTrue("A newly initialized LLDeque should be empty", A1.isEmpty());
-        A1.addLast("front");
+        assertTrue("A newly initialized LLDeque should be empty", ArrayDeque.isEmpty());
+        ArrayDeque.addLast("front");
 
         // The && operator is the same as "and" in Python.
         // It's a binary operator that returns true if both arguments true, and false otherwise.
-        assertEquals(1, A1.size());
-        assertFalse("lld1 should now contain 1 item", A1.isEmpty());
+        assertEquals(1, ArrayDeque.size());
+        assertFalse("lld1 should now contain 1 item", ArrayDeque.isEmpty());
 
-        A1.addLast("middle");
-        assertEquals(2, A1.size());
+        ArrayDeque.addLast("middle");
+        assertEquals(2, ArrayDeque.size());
 
-        A1.addLast("back");
-        assertEquals(3, A1.size());
+        ArrayDeque.addLast("back");
+        assertEquals(3, ArrayDeque.size());
 
         System.out.println("Printing out deque: ");
-        A1.printDeque();
+        ArrayDeque.printDeque();
 
     }
 

@@ -1,6 +1,5 @@
 package gh2;
-
-import deque.A1;
+import deque.ArrayDeque;
 import deque.Deque;
 
 //Note: This file will not compile until you complete the Deque implementations
@@ -20,7 +19,7 @@ public class GuitarString {
         int capacity = (int) Math.round(SR / frequency);
 
         // 2. create a new deque.
-        buffer = new A1<>();
+        buffer = new ArrayDeque<>();
 
         // 3. using for loop to initialize this deque
         for (int i = 0; i < capacity; i++) {
