@@ -1,14 +1,12 @@
 package deque;
-
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
     private int front;      // front pointer
     private int back;       // back pointer
-
+    final int resizingLength = 16;
     /** Creates an empty list. */
     public ArrayDeque() {
         items = (T[]) new Object[8];
@@ -20,10 +18,10 @@ public class ArrayDeque<T> implements Deque<T>{
     /** Inserts X into the back of the list. */
     @Override
     public void addLast(T x) {
-        if(isEmpty()){
+        if (isEmpty()) {
             items[back] = x;
-        } else{
-            if(size == items.length){
+        } else {
+            if (size == items.length) {
                 resize(size * 2);
             }
             back = (back + 1 + items.length) % items.length;
@@ -38,42 +36,42 @@ public class ArrayDeque<T> implements Deque<T>{
     // [1,0,0] -> [1,0,2]
     // b    f      b f
 
-//    public void addFirst(T x){
-//        if(isEmpty()) {
-//            // initialize f/b pointer
-//            items[front] = x;
-//            size += 1;
-//        } else
-//            if(front == 0 && size != items.length) {
-//            front = (front - 1 + items.length) % items.length;
-//            items[front] = x;
-//            size += 1;
-//
-//        } else if(size == items.length){
-//            resize(size * 2);
-////            front = 0; // after resizing, initialize the front pointer to 0;
-//            front = (front - 1 + items.length) % items.length;
-//            items[front] = x;
-//            size += 1;
-//        } else {
-//            front -= 1;
-//            items[front] = x;
-//            size += 1;
-//        }
-//    }
+    //    public void addFirst(T x){
+    //        if(isEmpty()) {
+    //            // initialize f/b pointer
+    //            items[front] = x;
+    //            size += 1;
+    //        } else
+    //            if(front == 0 && size != items.length) {
+    //            front = (front - 1 + items.length) % items.length;
+    //            items[front] = x;
+    //            size += 1;
+    //
+    //        } else if(size == items.length){
+    //            resize(size * 2);
+    ////            front = 0; // after resizing, initialize the front pointer to 0;
+    //            front = (front - 1 + items.length) % items.length;
+    //            items[front] = x;
+    //            size += 1;
+    //        } else {
+    //            front -= 1;
+    //            items[front] = x;
+    //            size += 1;
+    //        }
+    //    }
 
     @Override
-    public void addFirst(T x){
-        if(isEmpty()) {
+    public void addFirst(T x) {
+        if (isEmpty()) {
             items[front] = x;
-        } else{
-            if(size == items.length){
+        } else {
+            if (size == items.length) {
                 resize(size * 2);
             }
             front = ((front - 1) + items.length) % items.length;
             items[front] = x;
         }
-            size += 1;
+        size += 1;
     }
 
 
@@ -83,17 +81,17 @@ public class ArrayDeque<T> implements Deque<T>{
      * less space consumption. But remember, resizing array to decrease its size
      * will also cause O(n) time complexity!! */
     @Override
-    public T removeFirst(){
-        if(isEmpty()){
+    public T removeFirst() {
+        if (isEmpty()) {
             return null;
         } else {
             // two approaches are the same mathematical logic
             // "(size - 1) / items.length < 0.25" is equivalent to "size < items.length / 4"
-//            if (items.length >= 16 && (double) (size - 1) / items.length < 0.25)
-//                resize(items.length / 2);
-//            }
+            //            if (items.length >= 16 && (double) (size - 1) / items.length < 0.25)
+            //                resize(items.length / 2);
+            //            }
             // this approach is recommended use.
-            if(size < items.length / 4 && items.length >= 16){
+            if (size < items.length / 4 && items.length >= resizingLength) {
                 resize(items.length / 2);
             }
             T removedItem = items[front];
@@ -108,12 +106,20 @@ public class ArrayDeque<T> implements Deque<T>{
      * returns deleted item. */
     @Override
     public T removeLast() {
-        if(isEmpty()){
+        if (isEmpty()) {
             return null;
         } else {
-            if(size < items.length / 4 && items.length > 8){
+            if (size < items.length / 4 && items.length > 8) {
                 resize(items.length / 2);
             }
+
+            if (size == 1) {
+                T removedItem = items[back];
+                items[back] = null;
+                size--;
+                return removedItem;
+            }
+
             T removedItem = items[back];
             items[back] = null;
             back = (back - 1 + items.length) % items.length;
@@ -123,18 +129,18 @@ public class ArrayDeque<T> implements Deque<T>{
     }
 
     /** Returns the item from the back of the list. */
-    public T getLast() {
+    private T getLast() {
         return items[back];
     }
 
     /** Gets the ith item in the list (0 is the front). */
     @Override
     public T get(int i) {
-//        if (i < 0 || i >= size) {
-//            return null;
-//        }else {
-//            return items[(front + i + items.length) % items.length];
-//        }
+        //        if (i < 0 || i >= size) {
+        //            return null;
+        //        }else {
+        //            return items[(front + i + items.length) % items.length];
+        //        }
         if (isEmpty() || i < 0 || i >= size) {  // 保留isEmpty()检查
             return null;
         }
@@ -152,15 +158,15 @@ public class ArrayDeque<T> implements Deque<T>{
 
     /** Return an iterator of a LinkedListDeque */
     public Iterator<T> iterator() {
-        return new arrayDequeIterator();
+        return new ArrayDequeIterator();
     }
 
-    private class arrayDequeIterator implements Iterator<T>{
+    private class ArrayDequeIterator implements Iterator<T> {
         private int pos; // pos which iterator start
         private int count; // counter for the iterator
 
         /** Constructor */
-        public arrayDequeIterator(){
+        public ArrayDequeIterator() {
             pos = front;
             count = 0;
         }
@@ -175,7 +181,7 @@ public class ArrayDeque<T> implements Deque<T>{
         @Override
         public T next() {
             T returnedItem = null;
-            if(hasNext()){
+            if (hasNext()) {
                 returnedItem = items[pos];
                 pos = (pos + 1 + items.length) % items.length;
                 count += 1;
@@ -189,12 +195,12 @@ public class ArrayDeque<T> implements Deque<T>{
     public boolean equals(Object o) {
         // step 1: make sure object o is the type ArrayDeque
         // if o is null or not LinkedListDeque type, return false;
-        if(!(o instanceof ArrayDeque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
 
         // Step2, check the size
-        if(this.size() != ((ArrayDeque<?>) o).size()){
+        if (this.size() != ((ArrayDeque<?>) o).size()) {
             return false;
         }
 
@@ -202,18 +208,18 @@ public class ArrayDeque<T> implements Deque<T>{
         // reminder: we can use iterator we just created
         // make iterator for each object
         // one for "this" obj, and the other one for object o
-        Iterator<T> this_obj = this.iterator();
-        Iterator<?> obj_arrayDeque = ((ArrayDeque<?>) o).iterator();
+        Iterator<T> thisObj = this.iterator();
+        Iterator<T> objArrayDeque = ((ArrayDeque<T>) o).iterator();
 
-        while(this_obj.hasNext()){
-            T this_objItems = this_obj.next();
-            Object obj_arrayDequeItem = obj_arrayDeque.next();
+        while (thisObj.hasNext()) {
+            T thisobjItems = thisObj.next();
+            Object objArrayDequeItem = objArrayDeque.next();
             // remember, do not compare each iterator, compare each element, e.g, this_obj.next();
-            if(this_objItems == null){
-                if(obj_arrayDequeItem != null){
+            if (thisobjItems == null) {
+                if (objArrayDequeItem != null) {
                     return false;
                 }
-            } else if(!this_objItems.equals(obj_arrayDequeItem)) {
+            } else if (!thisobjItems.equals(objArrayDequeItem)) {
                 return false;
             }
         }
@@ -223,7 +229,7 @@ public class ArrayDeque<T> implements Deque<T>{
     @Override
     public void printDeque() {
         for (int i = 0; i < size; i++) {
-                System.out.print(items[(front + i) % items.length] + " ");
+            System.out.print(items[(front + i) % items.length] + " ");
         }
         System.out.println();
     }
@@ -241,34 +247,31 @@ public class ArrayDeque<T> implements Deque<T>{
         back = size - 1;          // back point to the last position that has valued element - (指向最后一个有效数据的位置)
     }
 
-    public static void main(String[] args) {
+    private static void main(String[] args) {
         ArrayDeque<Object> A1 = new ArrayDeque<>();
         //A1.addFirst(1);
-//        A1.addLast(1);
-//        A1.addLast(2);
-//        A1.addLast(3);
-//        A1.addLast(4);
-//        A1.addLast(5);
-//        A1.addLast(6);
-//        A1.addLast(7);
-//        A1.addLast(8);
-//        A1.addLast(9);
-//        System.out.println(A1.get(0));
+        //        A1.addFirst(1);
+        //        A1.removeLast();
+        //        A1.addFirst(3);
+        //        A1.addFirst(4);
+        //        A1.addFirst(5);
+        //        A1.addFirst(6);
+        //        System.out.println(A1.removeLast());
 
-//        ArrayDeque<Object> A2 = new ArrayDeque<>();
-//        A2.addFirst(1);
-//        A2.addFirst(2);
-//        A2.addFirst(3);
-//        A2.addFirst(3);
+        //        ArrayDeque<Object> A2 = new ArrayDeque<>();
+        //        A2.addFirst(1);
+        //        A2.addFirst(2);
+        //        A2.addFirst(3);
+        //        A2.addFirst(3);
 
 
 
-//        A1.printDeque();
-//        System.out.println(A1.get(6));
-//        A1.printDeque();
-//        System.out.println("Below is size arrayDeque");
-//        System.out.println(A1.size());
+        //        A1.printDeque();
+        //        System.out.println(A1.get(6));
+        //        A1.printDeque();
+        //        System.out.println("Below is size arrayDeque");
+        //        System.out.println(A1.size());
 
-//        System.out.println(A1.equals(A2));
+        //        System.out.println(A1.equals(A2));
     }
 }

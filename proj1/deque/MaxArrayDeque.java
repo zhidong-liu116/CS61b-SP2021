@@ -31,19 +31,19 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         return maxElement;
     }
 
-    public T max(Comparator<T> c){
-        if(isEmpty()) {
+    public T max(Comparator<T> c) {
+        if (isEmpty()) {
             return null;
         }
 
         Iterator<T> iterator = iterator();
-        T max_element = iterator.next(); // representing the first element of this arraydeque
+        T maxElement = iterator.next(); // representing the first element of this arraydeque
         while (iterator.hasNext()) {
             T current = iterator.next();
-            if (c.compare(current, max_element) > 0) {
-                max_element = current;
+            if (c.compare(current, maxElement) > 0) {
+                maxElement = current;
             }
         }
-        return max_element;
+        return maxElement;
     }
 }
