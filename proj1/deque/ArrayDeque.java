@@ -50,7 +50,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     //
     //        } else if(size == items.length){
     //            resize(size * 2);
-    ////            front = 0; // after resizing, initialize the front pointer to 0;
+    //            front = 0; // after resizing, initialize the front pointer to 0;
     //            front = (front - 1 + items.length) % items.length;
     //            items[front] = x;
     //            size += 1;
