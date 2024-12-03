@@ -87,7 +87,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         } else {
             // two approaches are the same mathematical logic
-            // "(size - 1) / items.length < 0.25" is equivalent to "size < items.length / 4"
+            // "(size - 1) / items.length < 0.25 (1/4)" is equivalent to "size < items.length / 4"
             //            if (items.length >= 16 && (double) (size - 1) / items.length < 0.25)
             //                resize(items.length / 2);
             //            }
