@@ -193,6 +193,11 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     private static void main(String[] args) {
-
+        LinkedListDeque<Integer> L1 = new LinkedListDeque<>();
+        L1.addLast(1);
+        L1.addLast(2);
+        L1.addLast(3);
+        L1.printDeque();
+        System.out.println(L1.sentinel.prev.item);
     }
 }
