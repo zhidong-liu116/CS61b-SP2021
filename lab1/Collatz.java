@@ -4,6 +4,7 @@
 public class Collatz {
 
     /** Buggy implementation of nextNumber! */
+    // Done
     public static int nextNumber(int n) {
         if (n % 2 == 0) {
             n = n / 2;
