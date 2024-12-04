@@ -2,9 +2,7 @@
  *  @author YOUR NAME HERE
  */
 public class Collatz {
-
-    /** Buggy implementation of nextNumber! */
-    // 确保是正确的实现：
+    /** Correct implementation of nextNumber! */
     public static int nextNumber(int n) {
         if (n % 2 == 0) {
             n = n / 2;
@@ -15,8 +13,6 @@ public class Collatz {
         }
         return n;
     }
-
-
     public static void main(String[] args) {
         int n = 5;
         System.out.print(n + " ");
